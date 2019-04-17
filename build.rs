@@ -11,9 +11,9 @@ fn main() -> Result<(), Box<Error>> {
     let dest_path = Path::new(&out_dir).join("names.rs");
     let mut f = File::create(&dest_path)?;
 
-    write_array(&mut f, "FIRSTNAME_FEMALE", "src/data/firstname_female.csv");
-    write_array(&mut f, "FIRSTNAME_MALE", "src/data/firstname_male.csv");
-    write_array(&mut f, "SURNAME", "src/data/surname.csv");
+    write_array(&mut f, "FIRSTNAME_FEMALE", "src/data/firstname_female.csv")?;
+    write_array(&mut f, "FIRSTNAME_MALE", "src/data/firstname_male.csv")?;
+    write_array(&mut f, "SURNAME", "src/data/surname.csv")?;
 
     Ok(())
 }
@@ -24,7 +24,7 @@ fn write_array(file: &mut File, constant_name: &str, path: &str) -> Result<(), B
     write!(file, "static {}: &[(u32, &str)] = &[\n", constant_name)?;
     let mut total: u32 = 0;
     for result in reader.records() {
-        let r = result?;
+        let r = result?; 
         let name = dbg!(&r[0]);
         let frequency: u32 = r[1].parse()?;
         total += frequency;

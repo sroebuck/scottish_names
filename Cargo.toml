@@ -1,5 +1,10 @@
 [package]
 name = "scottish_names"
+description = "Library for generating random names of people based on frequency of occurrence of birth-names in Scotland"
+repository = "https://github.com/sroebuck/scottish_names"
+keywords = ["random", "names", "scottish"]
+license = "MIT"
+maintenance = {status = "experimental"}
 version = "0.1.0"
 authors = ["Stuart Roebuck <stuart.roebuck@gmail.com>"]
 edition = "2018"
