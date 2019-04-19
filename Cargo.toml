@@ -4,14 +4,20 @@ description = "Library for generating random names of people based on frequency 
 repository = "https://github.com/sroebuck/scottish_names"
 keywords = ["random", "names", "scottish"]
 license = "MIT"
-maintenance = {status = "experimental"}
-version = "0.1.0"
+version = "0.1.1"
 authors = ["Stuart Roebuck <stuart.roebuck@gmail.com>"]
 edition = "2018"
 build = "build.rs"
 
 [build-dependencies]
 csv = "1.0.6"
+
+[dev-dependencies]
+criterion = "0.2.11"
+
+[[bench]]
+name = "my_benchmark"
+harness = false
 
 [dependencies]
 rand = "0.6.5"

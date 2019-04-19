@@ -21,15 +21,18 @@ fn main() -> Result<(), Box<Error>> {
 fn write_array(file: &mut File, constant_name: &str, path: &str) -> Result<(), Box<Error>> {
     let mut reader = csv::ReaderBuilder::new().has_headers(false).from_path(path)?;
 
-    write!(file, "static {}: &[(u32, &str)] = &[\n", constant_name)?;
-    let mut total: u32 = 0;
+    write!(file, "const {}: ArrayType = &[\n", constant_name)?;
+    let mut total_frequency: u32 = 0;
+    let mut total_count: u16 = 0;
     for result in reader.records() {
+        total_count += 1;
         let r = result?; 
         let name = dbg!(&r[0]);
         let frequency: u32 = r[1].parse()?;
-        total += frequency;
-        write!(file, "  ({},\"{}\"),\n", total, name)?;
+        total_frequency += frequency;
+        write!(file, "  ({},\"{}\"),\n", total_frequency, name)?;
     }
     write!(file, "];\n")?;
+    write!(file, "const {}_LEN: usize = {};\n", constant_name, total_count)?;
     Ok(())
 }

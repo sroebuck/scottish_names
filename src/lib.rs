@@ -39,37 +39,50 @@ pub fn first_name(sex: Sex) -> &'static str {
     first_name_with_seed(sex, 0)
 }
 
+/// Return a random surname in all caps.
+///
+/// Unfortunately the data source is capitalised so there is no direct way of obtaining
+/// the surname in mixed-case.
+///
+/// ```
+/// use scottish_names::*;
+///
+/// let n = surname();
+/// println!("Surname is {}", n);
+/// ```
 pub fn surname() -> &'static str {
     surname_with_seed(0)
 }
 
+type ArrayType = &'static [(FrequencyCount, &'static str)];
+type FrequencyCount = u32;
+
 fn first_name_with_seed(sex: Sex, seed: u16) -> &'static str {
-    let array = match sex {
-        Sex::Female => FIRSTNAME_FEMALE,
-        Sex::Male => FIRSTNAME_MALE,
+    let (array, length) = match sex {
+        Sex::Female => (FIRSTNAME_FEMALE, FIRSTNAME_FEMALE_LEN),
+        Sex::Male => (FIRSTNAME_MALE, FIRSTNAME_MALE_LEN),
     };
-    name(array, seed)
+    name(array, length, seed)
 }
 
 fn surname_with_seed(seed: u16) -> &'static str {
-    name(SURNAME, seed)
+    name(SURNAME, SURNAME_LEN, seed)
 }
 
-fn name(array: &[(u32, &'static str)], seed: u16) -> &'static str {
+fn name(array: ArrayType, length: usize, seed: u16) -> &'static str {
     let mut rng = thread_rng();
 
-    let len = array.len();
-    let max: u32 = array[len - 1].0;
-    let count: u32 = if seed == 1000 {
+    let max: FrequencyCount = array[length - 1].0;
+    let count: FrequencyCount = if seed == 1000 {
         4000
     } else {
         rng.gen_range(0, max)
     };
-    get_at_count(array, count, 0, len)
+    get_at_count(array, count, 0, length)
 }
 
-fn get_at_count(array: &[(u32, &'static str)], count: u32, min: usize, max: usize) -> &'static str {
-    let avg = (min + max) / 2;
+fn get_at_count(array: ArrayType, count: FrequencyCount, min: usize, max: usize) -> &'static str {
+    let avg = min + (max - min) / 4;
     let (low, high) = match avg {
         0 => (0, array[avg].0),
         _ => (array[avg - 1].0, array[avg].0),
