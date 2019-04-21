@@ -41,9 +41,6 @@ pub fn first_name(sex: Sex) -> &'static str {
 
 /// Return a random surname in all caps.
 ///
-/// Unfortunately the data source is capitalised so there is no direct way of obtaining
-/// the surname in mixed-case.
-///
 /// ```
 /// use scottish_names::*;
 ///
