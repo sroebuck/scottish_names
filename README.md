@@ -32,3 +32,7 @@ Breaking change with surnames now in mixed case rather than capitalised.
 ### Version 0.2.1
 
 Added link to this `README.md` in `Cargo.toml` so that it would appear in crates.io.
+
+### Version 0.2.2
+
+Updated dependencies to more recent versions to address security issue with criterion.
