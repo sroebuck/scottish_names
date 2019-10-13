@@ -101,7 +101,7 @@ mod tests {
     fn it_works() {
         assert_eq!(first_name_with_seed(Sex::Female, 1000), "Lucy");
         assert_eq!(first_name_with_seed(Sex::Male, 1000), "Jacob");
-        assert_eq!(surname_with_seed(1000), "WILSON");
+        assert_eq!(surname_with_seed(1000), "Wilson");
     }
 
     #[test]
